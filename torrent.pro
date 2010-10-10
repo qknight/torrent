@@ -1,5 +1,5 @@
 DEFINES += QT_NO_CAST_FROM_BYTEARRAY
-#DEFINES += QT_NO_CAST_TO_ASCII
+DEFINES += QT_NO_CAST_TO_ASCII
 
 HEADERS += addtorrentdialog.h \
            bencodeparser.h \

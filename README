@@ -25,13 +25,21 @@ compiling with QT_NO_CAST_TO_ASCII not possible
 ========================================================================
 DEFINES += QT_NO_CAST_TO_ASCII
 
+g++ -c -pipe -march=native -O2 -Wall -W -D_REENTRANT -DQT_NO_CAST_FROM_BYTEARRAY -DQT_NO_CAST_TO_ASCII -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_SHARED -I/usr/share/qt4/mkspecs/linux-g++ -I. -I/usr/include/qt4/QtCore -I/usr/include/qt4/QtNetwork -I/usr/include/qt4/QtGui -I/usr/include/qt4 -I. -I. -o trackerclient.o trackerclient.cpp
+trackerclient.cpp: In member function 'void TrackerClient::fetchPeerList()':
+trackerclient.cpp:122: error: no match for 'operator+=' in 'query += passkey'
+/usr/include/qt4/QtCore/qbytearray.h:486: note: candidates are: QByteArray& QByteArray::operator+=(char)
+/usr/include/qt4/QtCore/qbytearray.h:488: note:                 QByteArray& QByteArray::operator+=(const char*)
+/usr/include/qt4/QtCore/qbytearray.h:490: note:                 QByteArray& QByteArray::operator+=(const QByteArray&)
+trackerclient.cpp:123: error: no match for 'operator+=' in 'query += operator+(const char*, const QString&)(((const QString&)((const QString*)(& encodedSum))))'
+/usr/include/qt4/QtCore/qbytearray.h:486: note: candidates are: QByteArray& QByteArray::operator+=(char)
+/usr/include/qt4/QtCore/qbytearray.h:488: note:                 QByteArray& QByteArray::operator+=(const char*)
+/usr/include/qt4/QtCore/qbytearray.h:490: note:                 QByteArray& QByteArray::operator+=(const QByteArray&)
+make: *** [trackerclient.o] Error 1
 
-
-
-
-
-
-
+i fixed this with 
+    query += "info_hash=" + encodedSum.toLatin1();
+not sure if that is correct
 
 ========================================================================
 compiling with QT_NO_CAST_FROM_BYTEARRAY not possible
