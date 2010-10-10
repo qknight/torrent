@@ -182,13 +182,13 @@ void TrackerClient::httpRequestDone(bool error)
 
     if (dict.contains("failure reason")) {
         // no other items are present
-        emit failure(QString::fromUtf8(dict.value("failure reason").toByteArray()));
+        emit failure(QString::fromUtf8(dict.value("failure reason").toByteArray().constData()));
         return;
     }
 
     if (dict.contains("warning message")) {
         // continue processing
-        emit warning(QString::fromUtf8(dict.value("warning message").toByteArray()));
+        emit warning(QString::fromUtf8(dict.value("warning message").toByteArray().constData()));
     }
 
     if (dict.contains("tracker id")) {
@@ -212,8 +212,8 @@ void TrackerClient::httpRequestDone(bool error)
             for (int i = 0; i < peerTmp.size(); ++i) {
                 TorrentPeer tmp;
                 QMap<QByteArray, QVariant> peer = qVariantValue<QMap<QByteArray, QVariant> >(peerTmp.at(i));
-                tmp.id = QString::fromUtf8(peer.value("peer id").toByteArray());
-                tmp.address.setAddress(QString::fromUtf8(peer.value("ip").toByteArray()));
+                tmp.id = QString::fromUtf8(peer.value("peer id").toByteArray().constData());
+                tmp.address.setAddress(QString::fromUtf8(peer.value("ip").toByteArray().constData()));
                 tmp.port = peer.value("port").toInt();
                 peers << tmp;
             }

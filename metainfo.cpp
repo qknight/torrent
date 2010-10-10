@@ -103,12 +103,12 @@ bool MetaInfo::parse(const QByteArray &data)
 
             MetaInfoMultiFile multiFile;
             multiFile.length = file.value("length").toLongLong();
-            multiFile.path = QString::fromUtf8(path);
+            multiFile.path = QString::fromUtf8(path.constData());
             multiFile.md5sum = file.value("md5sum").toByteArray();
             metaInfoMultiFiles << multiFile;
         }
 
-        metaInfoName = QString::fromUtf8(info.value("name").toByteArray());
+        metaInfoName = QString::fromUtf8(info.value("name").toByteArray().constData());
         metaInfoPieceLength = info.value("piece length").toInt();
         QByteArray pieces = info.value("pieces").toByteArray();
         for (int i = 0; i < pieces.size(); i += 20)
@@ -117,7 +117,7 @@ bool MetaInfo::parse(const QByteArray &data)
         metaInfoFileForm = SingleFileForm;
         metaInfoSingleFile.length = info.value("length").toLongLong();
         metaInfoSingleFile.md5sum = info.value("md5sum").toByteArray();
-        metaInfoSingleFile.name = QString::fromUtf8(info.value("name").toByteArray());
+        metaInfoSingleFile.name = QString::fromUtf8(info.value("name").toByteArray().constData());
         metaInfoSingleFile.pieceLength = info.value("piece length").toInt();
 
         QByteArray pieces = info.value("pieces").toByteArray();
@@ -125,7 +125,7 @@ bool MetaInfo::parse(const QByteArray &data)
             metaInfoSingleFile.sha1Sums << pieces.mid(i, 20);
     }
 
-    metaInfoAnnounce = QString::fromUtf8(dict.value("announce").toByteArray());
+    metaInfoAnnounce = QString::fromUtf8(dict.value("announce").toByteArray().constData());
 
     if (dict.contains("announce-list")) {
         // ### unimplemented
@@ -134,9 +134,9 @@ bool MetaInfo::parse(const QByteArray &data)
     if (dict.contains("creation date"))
         metaInfoCreationDate.setTime_t(dict.value("creation date").toInt());
     if (dict.contains("comment"))
-        metaInfoComment = QString::fromUtf8(dict.value("comment").toByteArray());
+        metaInfoComment = QString::fromUtf8(dict.value("comment").toByteArray().constData());
     if (dict.contains("created by"))
-        metaInfoCreatedBy = QString::fromUtf8(dict.value("created by").toByteArray());
+        metaInfoCreatedBy = QString::fromUtf8(dict.value("created by").toByteArray().constData());
 
     return true;
 }

@@ -21,10 +21,75 @@ download widget uses wrong torrent when changing torrents
 7. hit ok and see that /tmp/evopedia/wikipedia_de_2010-07-27.torrent is downloaded AND NOT /tmp/evopedia/wikipedia_sl_2010-08-12.torrent
 
 ========================================================================
-compiling with QT_NO_CAST_TO_ASCII and QT_NO_CAST_FROM_BYTEARRAY not possible
+compiling with QT_NO_CAST_TO_ASCII not possible
 ========================================================================
 DEFINES += QT_NO_CAST_TO_ASCII
+
+
+
+
+
+
+
+
+
+========================================================================
+compiling with QT_NO_CAST_FROM_BYTEARRAY not possible
+========================================================================
 DEFINES += QT_NO_CAST_FROM_BYTEARRAY
 
-this will result in several issues which have to be fixed
+============= metainfo.cpp ============
+/usr/include/qt4/QtCore/qbytearray.h: In member function 'bool MetaInfo::parse(const QByteArray&)':
+/usr/include/qt4/QtCore/qbytearray.h:364: error: 'QByteArray::operator QNoImplicitBoolCast() const' is private
+metainfo.cpp:106: error: within this context
+metainfo.cpp:106: error: invalid conversion from 'QNoImplicitBoolCast' to 'const char*'
+metainfo.cpp:106: error:   initializing argument 1 of 'static QString QString::fromUtf8(const char*, int)'
+/usr/include/qt4/QtCore/qbytearray.h:364: error: 'QByteArray::operator QNoImplicitBoolCast() const' is private
+metainfo.cpp:111: error: within this context
+metainfo.cpp:111: error: invalid conversion from 'QNoImplicitBoolCast' to 'const char*'
+metainfo.cpp:111: error:   initializing argument 1 of 'static QString QString::fromUtf8(const char*, int)'
+/usr/include/qt4/QtCore/qbytearray.h:364: error: 'QByteArray::operator QNoImplicitBoolCast() const' is private
+metainfo.cpp:120: error: within this context
+metainfo.cpp:120: error: invalid conversion from 'QNoImplicitBoolCast' to 'const char*'
+metainfo.cpp:120: error:   initializing argument 1 of 'static QString QString::fromUtf8(const char*, int)'
+/usr/include/qt4/QtCore/qbytearray.h:364: error: 'QByteArray::operator QNoImplicitBoolCast() const' is private
+metainfo.cpp:128: error: within this context
+metainfo.cpp:128: error: invalid conversion from 'QNoImplicitBoolCast' to 'const char*'
+metainfo.cpp:128: error:   initializing argument 1 of 'static QString QString::fromUtf8(const char*, int)'
+/usr/include/qt4/QtCore/qbytearray.h:364: error: 'QByteArray::operator QNoImplicitBoolCast() const' is private
+metainfo.cpp:137: error: within this context
+metainfo.cpp:137: error: invalid conversion from 'QNoImplicitBoolCast' to 'const char*'
+metainfo.cpp:137: error:   initializing argument 1 of 'static QString QString::fromUtf8(const char*, int)'
+/usr/include/qt4/QtCore/qbytearray.h:364: error: 'QByteArray::operator QNoImplicitBoolCast() const' is private
+metainfo.cpp:139: error: within this context
+metainfo.cpp:139: error: invalid conversion from 'QNoImplicitBoolCast' to 'const char*'
+metainfo.cpp:139: error:   initializing argument 1 of 'static QString QString::fromUtf8(const char*, int)'
+
+============= trackerclient.cpp ============
+/usr/include/qt4/QtCore/qbytearray.h: In member function 'void TrackerClient::httpRequestDone(bool)':
+/usr/include/qt4/QtCore/qbytearray.h:364: error: 'QByteArray::operator QNoImplicitBoolCast() const' is private
+trackerclient.cpp:185: error: within this context
+trackerclient.cpp:185: error: invalid conversion from 'QNoImplicitBoolCast' to 'const char*'
+trackerclient.cpp:185: error:   initializing argument 1 of 'static QString QString::fromUtf8(const char*, int)'
+/usr/include/qt4/QtCore/qbytearray.h:364: error: 'QByteArray::operator QNoImplicitBoolCast() const' is private
+trackerclient.cpp:191: error: within this context
+trackerclient.cpp:191: error: invalid conversion from 'QNoImplicitBoolCast' to 'const char*'
+trackerclient.cpp:191: error:   initializing argument 1 of 'static QString QString::fromUtf8(const char*, int)'
+/usr/include/qt4/QtCore/qbytearray.h:364: error: 'QByteArray::operator QNoImplicitBoolCast() const' is private
+trackerclient.cpp:215: error: within this context
+trackerclient.cpp:215: error: invalid conversion from 'QNoImplicitBoolCast' to 'const char*'
+trackerclient.cpp:215: error:   initializing argument 1 of 'static QString QString::fromUtf8(const char*, int)'
+/usr/include/qt4/QtCore/qbytearray.h:364: error: 'QByteArray::operator QNoImplicitBoolCast() const' is private
+trackerclient.cpp:216: error: within this context
+trackerclient.cpp:216: error: invalid conversion from 'QNoImplicitBoolCast' to 'const char*'
+trackerclient.cpp:216: error:   initializing argument 1 of 'static QString QString::fromUtf8(const char*, int)'
+make: *** [trackerclient.o] Error 1
+
+== fix ==
+fixing is easy, as it requires a constData() explicit cast
+ 
+== the torrent client status after this fix ==
+i was able to download with 16kb/s, so it seem to work
+
+
 
