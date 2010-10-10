@@ -99,5 +99,32 @@ fixing is easy, as it requires a constData() explicit cast
 == the torrent client status after this fix ==
 i was able to download with 16kb/s, so it seem to work
 
+========================================================================
+good default rates for upload/download kb/s
+========================================================================
+starting a TorrentClient without setting a download and uploadrate will result in:
+ - no uploads or downloads are started
+ - no seeds are found
+ - no debugmessage of any kind
+there needs to be a better default
 
 
+========================================================================
+library usage scenario
+========================================================================
+using the torrent for your own code is not complicated as the new coreapplication shows. in contrast:
+the gui example is very good but lacks a easy copy'n'paste factor as one must read a lot of stuff before it can be used for other projects
+
+see:
+torrent-guiless.pro
+main-nogui.cpp
+coreapplication.cpp
+coreapplication.h
+
+which has a console frontend only. handy for integration into your project - very easy to adapt
+
+build with:
+make distclean
+qmake torrent-guiless
+make
+./torrent-guiless
