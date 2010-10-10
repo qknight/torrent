@@ -1,0 +1,30 @@
+issues:
+========================================================================
+fires updateProgress with 0 before state change
+========================================================================
+void TorrentFrontend::updateProgress(int) 98 %  "Preparing" 
+void TorrentFrontend::updateProgress(int) 99 %  "Preparing" 
+void TorrentFrontend::updateProgress(int) 100 %  "Preparing" 
+void TorrentFrontend::updateProgress(int) 0 %  "Preparing" 
+void TorrentFrontend::updateState(TorrentClient::State) "Searching" 
+void TorrentFrontend::updateState(TorrentClient::Stat
+
+========================================================================
+download widget uses wrong torrent when changing torrents
+========================================================================
+1. start torrent
+2. file - add new torrent
+3. select /tmp/evopedia/wikipedia_de_2010-07-27.torrent
+4. in the browser one can see now the contents of that torrent, now
+5. hit the torrent 'browse' button and select a different
+6. /tmp/evopedia/wikipedia_sl_2010-08-12.torrent, notice that the browser shows now the wikipedia_sl_2010-08-12 contents
+7. hit ok and see that /tmp/evopedia/wikipedia_de_2010-07-27.torrent is downloaded AND NOT /tmp/evopedia/wikipedia_sl_2010-08-12.torrent
+
+========================================================================
+compiling with QT_NO_CAST_TO_ASCII and QT_NO_CAST_FROM_BYTEARRAY not possible
+========================================================================
+DEFINES += QT_NO_CAST_TO_ASCII
+DEFINES += QT_NO_CAST_FROM_BYTEARRAY
+
+this will result in several issues which have to be fixed
+
