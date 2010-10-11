@@ -1,3 +1,32 @@
+========================================================================
+library usage scenario
+========================================================================
+using the torrent for your own code is not complicated as the new coreapplication shows. in contrast:
+the gui example is very good but lacks a easy copy'n'paste factor as one must read a lot of stuff before it can be used for other projects
+
+see:
+torrent-guiless.pro
+main-nogui.cpp
+coreapplication.cpp
+coreapplication.h
+
+which has a console frontend only. handy for integration into your project - very easy to adapt
+
+build with:
+make distclean
+qmake torrent-guiless
+make
+./torrent-guiless
+
+IMPLEMENTED:
+- foobar.torrent and directory can be supplied using the command line
+- qsettings resume support
+
+
+
+
+
+
 fixed and not fixed issues:
 ========================================================================
 emits updateProgress with 0 before state change
@@ -12,7 +41,7 @@ void TorrentFrontend::updateState(TorrentClient::Stat
 this results in wrongly reported updateProgress values?!
 
 ========================================================================
-FIXED/REPORTED: download widget uses wrong torrent when changing torrents
+FIXED: download widget uses wrong torrent when changing torrents
 ========================================================================
 1. start torrent
 2. file - add new torrent
@@ -30,8 +59,8 @@ replace with:
     addTorrent(addTorrentDialog->torrentFileName(), addTorrentDialog->destinationFolder());
 
 
-=======================================================================
-FIXED/REPORTED compiling with QT_NO_CAST_TO_ASCII not possible
+========================================================================
+FIXED compiling with QT_NO_CAST_TO_ASCII not possible
 ========================================================================
 DEFINES += QT_NO_CAST_TO_ASCII
 
@@ -52,7 +81,7 @@ i fixed this with
 not sure if that is correct
 
 ========================================================================
-FIXED/REPORTED compiling with QT_NO_CAST_FROM_BYTEARRAY not possible
+FIXED compiling with QT_NO_CAST_FROM_BYTEARRAY not possible
 ========================================================================
 DEFINES += QT_NO_CAST_FROM_BYTEARRAY
 
@@ -110,7 +139,7 @@ fixing is easy, as it requires a constData() explicit cast
 i was able to download with 16kb/s, so it seem to work
 
 ========================================================================
-FIXED/REPORTED good default rates for upload/download kb/s
+FIXED good default rates for upload/download kb/s
 ========================================================================
 starting a TorrentClient without setting a download and uploadrate will result in:
  - no uploads or downloads are started
@@ -132,26 +161,4 @@ if someone does not like this default there MUST be a error message on stdout in
 i wasted a few hours finding that out as i thought it had something to do with the codebase i was integrating the torrent example in until
 i created the guiless coreapplication example. my wireshark trace didn't reveal much either: except that there is no traffic...
 
-========================================================================
-library usage scenario
-========================================================================
-using the torrent for your own code is not complicated as the new coreapplication shows. in contrast:
-the gui example is very good but lacks a easy copy'n'paste factor as one must read a lot of stuff before it can be used for other projects
 
-see:
-torrent-guiless.pro
-main-nogui.cpp
-coreapplication.cpp
-coreapplication.h
-
-which has a console frontend only. handy for integration into your project - very easy to adapt
-
-build with:
-make distclean
-qmake torrent-guiless
-make
-./torrent-guiless
-
-IMPLEMENTED:
-- foobar.torrent and directory can be supplied using the command line
-- qsettings resume support
