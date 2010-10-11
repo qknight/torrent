@@ -13,15 +13,20 @@ class CoreApplication : public QObject {
 
   public:
     CoreApplication();
-    ~CoreApplication();
-    void startTorrentDownload();
-    
+
   private:
     TorrentClient* torrentClient;
     QString dstDirectory;
     QString torrent;
+    int m_uprate;
+    int m_downrate;
+    void update();
+    void saveState();
     
   private Q_SLOTS:
+    void startTorrentDownload();
+    void finished(int state);
+
     void updateState(TorrentClient::State);
     void updatePeerInfo();
     void updateProgress(int);

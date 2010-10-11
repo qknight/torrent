@@ -279,7 +279,7 @@ bool MainWindow::addTorrent()
         return false;
 
     // Add the torrent to our list of downloads
-    addTorrent(fileName, addTorrentDialog->destinationFolder());
+    addTorrent(addTorrentDialog->torrentFileName(), addTorrentDialog->destinationFolder());
     if (!saveChanges) {
         saveChanges = true;
         QTimer::singleShot(1000, this, SLOT(saveSettings()));

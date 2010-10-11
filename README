@@ -1,6 +1,6 @@
-issues:
+fixed and not fixed issues:
 ========================================================================
-fires updateProgress with 0 before state change
+emits updateProgress with 0 before state change
 ========================================================================
 void TorrentFrontend::updateProgress(int) 98 %  "Preparing" 
 void TorrentFrontend::updateProgress(int) 99 %  "Preparing" 
@@ -9,8 +9,10 @@ void TorrentFrontend::updateProgress(int) 0 %  "Preparing"
 void TorrentFrontend::updateState(TorrentClient::State) "Searching" 
 void TorrentFrontend::updateState(TorrentClient::Stat
 
+this results in wrongly reported updateProgress values?!
+
 ========================================================================
-download widget uses wrong torrent when changing torrents
+FIXED/REPORTED: download widget uses wrong torrent when changing torrents
 ========================================================================
 1. start torrent
 2. file - add new torrent
@@ -20,8 +22,16 @@ download widget uses wrong torrent when changing torrents
 6. /tmp/evopedia/wikipedia_sl_2010-08-12.torrent, notice that the browser shows now the wikipedia_sl_2010-08-12 contents
 7. hit ok and see that /tmp/evopedia/wikipedia_de_2010-07-27.torrent is downloaded AND NOT /tmp/evopedia/wikipedia_sl_2010-08-12.torrent
 
-========================================================================
-compiling with QT_NO_CAST_TO_ASCII not possible
+FIXED with:
+
+mainwindow.cpp::line 282
+    addTorrent(fileName, addTorrentDialog->destinationFolder());
+replace with:
+    addTorrent(addTorrentDialog->torrentFileName(), addTorrentDialog->destinationFolder());
+
+
+=======================================================================
+FIXED/REPORTED compiling with QT_NO_CAST_TO_ASCII not possible
 ========================================================================
 DEFINES += QT_NO_CAST_TO_ASCII
 
@@ -42,7 +52,7 @@ i fixed this with
 not sure if that is correct
 
 ========================================================================
-compiling with QT_NO_CAST_FROM_BYTEARRAY not possible
+FIXED/REPORTED compiling with QT_NO_CAST_FROM_BYTEARRAY not possible
 ========================================================================
 DEFINES += QT_NO_CAST_FROM_BYTEARRAY
 
@@ -100,14 +110,27 @@ fixing is easy, as it requires a constData() explicit cast
 i was able to download with 16kb/s, so it seem to work
 
 ========================================================================
-good default rates for upload/download kb/s
+FIXED/REPORTED good default rates for upload/download kb/s
 ========================================================================
 starting a TorrentClient without setting a download and uploadrate will result in:
  - no uploads or downloads are started
- - no seeds are found
+ - no seeds are found/searched
  - no debugmessage of any kind
 there needs to be a better default
 
+    inline RateController(QObject *parent = 0)
+        : QObject(parent), transferScheduled(false) {setUploadLimit(10485760); setDownloadLimit(10485760);}
+
+10mib = 1024*1024*10 bytes = 10485760 bytes
+this is probably a good default value
+
+the best would be the maxiumum available
+
+if someone does not like this default there MUST be a error message on stdout indicating:
+"no upload/download rate was set in the RateController, therefore no socket operations will work. please set a default"
+
+i wasted a few hours finding that out as i thought it had something to do with the codebase i was integrating the torrent example in until
+i created the guiless coreapplication example. my wireshark trace didn't reveal much either: except that there is no traffic...
 
 ========================================================================
 library usage scenario
@@ -128,3 +151,7 @@ make distclean
 qmake torrent-guiless
 make
 ./torrent-guiless
+
+IMPLEMENTED:
+- foobar.torrent and directory can be supplied using the command line
+- qsettings resume support

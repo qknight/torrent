@@ -43,12 +43,12 @@
 
 #include "coreapplication.h"
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     QCoreApplication app(argc, argv);
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
+    CoreApplication ca;
 
-    CoreApplication* ca = new CoreApplication();
+    QTimer::singleShot(0,&ca,SLOT(startTorrentDownload()));
 
     return app.exec();
 }

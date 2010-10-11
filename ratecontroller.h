@@ -54,7 +54,7 @@ class RateController : public QObject
 
 public:
     inline RateController(QObject *parent = 0)
-        : QObject(parent), transferScheduled(false) { }
+        : QObject(parent), transferScheduled(false) {setUploadLimit(10485760); setDownloadLimit(10485760);}
     static RateController *instance();
 
     void addSocket(PeerWireClient *socket);
