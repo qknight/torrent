@@ -507,6 +507,7 @@ void MainWindow::updateDownloadRate(int bytesPerSecond)
     QString num;
     num.sprintf("%.1f KB/s", bytesPerSecond / 1024.0);
     torrentView->topLevelItem(row)->setText(3, num);
+    qDebug() << "down: " << bytesPerSecond/1024.0;
 
     if (!saveChanges) {
         saveChanges = true;
@@ -522,6 +523,7 @@ void MainWindow::updateUploadRate(int bytesPerSecond)
     QString num;
     num.sprintf("%.1f KB/s", bytesPerSecond / 1024.0);
     torrentView->topLevelItem(row)->setText(4, num);
+    qDebug() << "up: " << bytesPerSecond/1024.0;
 
     if (!saveChanges) {
         saveChanges = true;

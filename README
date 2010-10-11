@@ -20,18 +20,18 @@ make
 
 IMPLEMENTED:
 - foobar.torrent and directory can be supplied using the command line
-- qsettings resume support
+- qsettings resume support (saves state ever 15 seconds)
 
 
 output will look like this:
 % ./torrent-guiless /tmp/evopedia/wikipedia_de_2010-07-27.torrent /tmp/
 TorrentClient state changed to:  "Preparing" 
-  -> peers/seeds:  0 / 0 , download/upload rate kb/s:  0 / 4221 "Preparing" 4 %  
+  -> peers/seeds:  0 / 0 , download/upload rate kb/s:  0 / 0 "Preparing" 4 %  
 TorrentClient state changed to:  "Searching" 
 TorrentClient state changed to:  "Connecting" 
-  -> peers/seeds:  1 / 0 , download/upload rate kb/s:  0 / 4221 "Connecting" 4 %  
-  -> peers/seeds:  1 / 1 , download/upload rate kb/s:  0 / 4221 "Connecting" 4 %  
-  -> peers/seeds:  2 / 1 , download/upload rate kb/s:  0 / 4221 "Connecting" 4 %  
+  -> peers/seeds:  1 / 0 , download/upload rate kb/s:  0 / 0 "Connecting" 4 %  
+  -> peers/seeds:  1 / 1 , download/upload rate kb/s:  0 / 0 "Connecting" 4 %  
+  -> peers/seeds:  2 / 1 , download/upload rate kb/s:  0 / 0 "Connecting" 4 %  
   -> peers/seeds:  2 / 1 , download/upload rate kb/s:  0 / 0 "Connecting" 4 %  
   -> peers/seeds:  2 / 1 , download/upload rate kb/s:  0 / 0 "Connecting" 4 %  
   -> peers/seeds:  2 / 1 , download/upload rate kb/s:  0 / 0 "Connecting" 4 %  

@@ -1,10 +1,13 @@
 #include <QStringList>
 #include <QCoreApplication>
 #include <QSettings>
+#include <QTimer>
 #include "coreapplication.h"
 #include "ratecontroller.h"
 
 CoreApplication::CoreApplication() {
+	m_uprate = 0;
+	m_downrate = 0;
 }
 
 void CoreApplication::startTorrentDownload() {
@@ -64,6 +67,7 @@ void CoreApplication::startTorrentDownload() {
 
         torrentClient->setDumpedState(resumeState);
         torrentClient->start();
+        QTimer::singleShot(15000, this, SLOT(saveState()));
     }
 }
 
@@ -87,6 +91,7 @@ void CoreApplication::updateProgress(int percent) {
 }
 
 void CoreApplication::updateDownloadRate(int rate) {
+    //qDebug() << __PRETTY_FUNCTION__ << rate;
     static int previousrate = 0;
     if (previousrate == rate)
         return;
@@ -96,6 +101,7 @@ void CoreApplication::updateDownloadRate(int rate) {
 }
 
 void CoreApplication::updateUploadRate(int rate) {
+    //qDebug() << __PRETTY_FUNCTION__ << rate;
     static int previousrate = 0;
     if (previousrate == rate)
         return;
@@ -116,10 +122,9 @@ void CoreApplication::torrentError(TorrentClient::Error) {
 void CoreApplication::update() {
     qDebug() << "  -> peers/seeds: " << torrentClient->connectedPeerCount()
              << "/" << torrentClient->seedCount()
-             << ", download/upload rate kb/s: " << m_downrate/1000
-             << "/" << m_uprate/1000
+             << ", download/upload rate kb/s: " << m_downrate/1000.0
+             << "/" << m_uprate/1000.0
              << torrentClient->stateString() << torrentClient->progress() << "% ";
-    saveState();
 }
 
 void CoreApplication::saveState() {
@@ -131,6 +136,7 @@ void CoreApplication::saveState() {
     settings.setValue("downloadedBytes", torrentClient->downloadedBytes());
 
     settings.sync();
+    QTimer::singleShot(15000, this, SLOT(saveState()));
 }
 
 void CoreApplication::finished(int state) {
