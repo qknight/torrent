@@ -23,6 +23,33 @@ IMPLEMENTED:
 - qsettings resume support
 
 
+output will look like this:
+% ./torrent-guiless /tmp/evopedia/wikipedia_de_2010-07-27.torrent /tmp/
+TorrentClient state changed to:  "Preparing" 
+  -> peers/seeds:  0 / 0 , download/upload rate kb/s:  0 / 4221 "Preparing" 4 %  
+TorrentClient state changed to:  "Searching" 
+TorrentClient state changed to:  "Connecting" 
+  -> peers/seeds:  1 / 0 , download/upload rate kb/s:  0 / 4221 "Connecting" 4 %  
+  -> peers/seeds:  1 / 1 , download/upload rate kb/s:  0 / 4221 "Connecting" 4 %  
+  -> peers/seeds:  2 / 1 , download/upload rate kb/s:  0 / 4221 "Connecting" 4 %  
+  -> peers/seeds:  2 / 1 , download/upload rate kb/s:  0 / 0 "Connecting" 4 %  
+  -> peers/seeds:  2 / 1 , download/upload rate kb/s:  0 / 0 "Connecting" 4 %  
+  -> peers/seeds:  2 / 1 , download/upload rate kb/s:  0 / 0 "Connecting" 4 %  
+  -> peers/seeds:  2 / 1 , download/upload rate kb/s:  0 / 0 "Connecting" 4 %  
+  -> peers/seeds:  2 / 1 , download/upload rate kb/s:  0 / 0 "Connecting" 4 %  
+  -> peers/seeds:  2 / 1 , download/upload rate kb/s:  0 / 0 "Connecting" 4 %  
+  -> peers/seeds:  2 / 1 , download/upload rate kb/s:  0 / 0 "Connecting" 4 %  
+  -> peers/seeds:  2 / 1 , download/upload rate kb/s:  0 / 0 "Connecting" 4 %  
+TorrentClient state changed to:  "Downloading" 
+  -> peers/seeds:  2 / 1 , download/upload rate kb/s:  0 / 0 "Downloading" 4 %  
+  -> peers/seeds:  2 / 1 , download/upload rate kb/s:  11 / 0 "Downloading" 4 %  
+  -> peers/seeds:  2 / 1 , download/upload rate kb/s:  11 / 0 "Downloading" 4 %  
+  -> peers/seeds:  2 / 1 , download/upload rate kb/s:  30 / 0 "Downloading" 4 %  
+  -> peers/seeds:  2 / 1 , download/upload rate kb/s:  30 / 0 "Downloading" 4 %  
+  -> peers/seeds:  2 / 1 , download/upload rate kb/s:  44 / 0 "Downloading" 4 %  
+...
+
+
 
 
 
